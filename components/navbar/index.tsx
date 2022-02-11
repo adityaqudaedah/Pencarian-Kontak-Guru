@@ -14,10 +14,6 @@ const Navbar: NextPage<NavProps> = ({ buttonClick }) => {
   const currState = useAppSelector(state=>state.navButton.isLoginButtonClicked)
   const dispatch = useAppDispatch()
 
-  const checkState = useAppSelector(state => state.navButton)
-  
-  console.log(checkState);
-  // console.log('curr state', currState)
   
   return (
     <Flex alignItems={"center"}>
