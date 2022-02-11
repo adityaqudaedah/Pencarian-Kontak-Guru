@@ -12,7 +12,7 @@ const navButtonSlice = createSlice({
   name: "nav-button",
   initialState,
   reducers: {
-    loginClicked: (state, action) => {
+    loginClicked: (state, action:PayloadAction<boolean>) => {
       state.isLoginButtonClicked = action.payload;
     },
   },
