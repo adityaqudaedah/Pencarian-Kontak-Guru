@@ -3,7 +3,7 @@ import React from "react";
 import { NextPage } from "next";
 
 interface CardProps {
-  children: Object;
+  children: JSX.Element;
 }
 
 const Card: NextPage<CardProps> = ({ children }) => {

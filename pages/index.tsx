@@ -9,17 +9,13 @@ import InputSearch from "../components/inputSearch";
 import ListItems from "../components/listItem";
 import Logo from "../components/logo";
 
-
 const Home: NextPage = () => {
-
-  
   const [value, loading, error] = useCollection(
     collection(getFirestore(App), "users")
   );
 
   return (
     <Layout>
-      
       <Container>
         <Logo />
         <InputSearch />

@@ -5,23 +5,21 @@ import Footer from "../footer";
 import Modals from "../modals";
 import { useDisclosure } from "@chakra-ui/react";
 
-
 interface LayoutProps {
   children: Object;
 }
 
 const Layout: NextPage<LayoutProps> = ({ children }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  
   const openModalHanlder = () => {
-    onOpen()
-  }
+    onOpen();
+  };
 
   return (
     <>
-      <Navbar buttonClick = {openModalHanlder}  />
-      <Modals isOpen = {isOpen} onOpen={openModalHanlder} onClose={onClose} />
+      <Navbar buttonClick={openModalHanlder} />
+      <Modals isOpen={isOpen} onOpen={openModalHanlder} onClose={onClose} />
       {children}
       <Footer />
     </>
