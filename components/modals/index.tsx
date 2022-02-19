@@ -38,7 +38,7 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>{currState ? "Sign In" : "Create Your Account"}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             {currState&&<LoginForm />}
@@ -47,7 +47,7 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
 
           <ModalFooter>
             <Button colorScheme="blue" mr={3}>
-              Login
+              {currState?"login":"submit"}
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
