@@ -2,7 +2,7 @@ import React from "react";
 import { Flex, Spacer, Box, Text, Button } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useAppDispatch } from "../../hooks/useAppDispatch"
-import { useAppSelector } from "../../hooks/useAppSelector";
+// import { useAppSelector } from "../../hooks/useAppSelector";
 import { loginClicked } from "../../redux/features/nav/navButtonSlice";
 
 interface NavProps {
@@ -11,7 +11,7 @@ interface NavProps {
 
 const Navbar: NextPage<NavProps> = ({ buttonClick }) => {
 
-  const currState = useAppSelector(state=>state.navButton.isLoginButtonClicked)
+  // const currState = useAppSelector(state=>state.navButton.isLoginButtonClicked)
   const dispatch = useAppDispatch()
 
   
@@ -43,7 +43,7 @@ const Navbar: NextPage<NavProps> = ({ buttonClick }) => {
         <Button
           onClick={() => {
             buttonClick();
-            dispatch(loginClicked(!currState))
+            dispatch(loginClicked(true))
           }}
           colorScheme="teal"
           variant="ghost"
