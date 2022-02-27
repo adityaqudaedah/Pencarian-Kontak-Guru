@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
 import navButtonSlice from "../features/nav/navButtonSlice"
-import userSlice from "../features/user/userSlice"
+import userAuthSlice from "../features/user/userAuthSlice"
 
 const store = configureStore({
   reducer: {
-    user: userSlice,
+    userAuth: userAuthSlice,
     navButton: navButtonSlice
   }
 })
