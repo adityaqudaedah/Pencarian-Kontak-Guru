@@ -16,7 +16,6 @@ import {
 import { NextPage } from "next";
 
 import { useAppSelector } from "../../hooks/useAppSelector";
-import useAuthStateApp from "../../hooks/useAppAuth";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { login } from "../../redux/features/user/userAuthSlice";
 
@@ -27,69 +26,74 @@ interface ModalsInterface {
 }
 
 const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
-  // const initialRef = React.useRef();
+  
 
   const currState = useAppSelector(
     (state) => state.navButton.isLoginButtonClicked
   );
+
+  
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [userIsLogin, setUserIsLogin] = useState(false);
+  const [userFormIsValid, setUserFormIsValid] = useState(false);
   const [formIsValid, setFormIsValid] = useState<boolean>(false);
-  const [user, setUser] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
+  
+  const [loading, setLoading] = useState<boolean>(false);
+  const [userSignedIn, setUserSignedIn] = useState<boolean>(false)
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    let identifier:ReturnType<typeof setTimeout>
-    if (user) {
-      console.log('validating form');
-       identifier = setTimeout(
-         () => { setFormIsValid(email.includes("@") && password.length > 6);setUserIsLogin(true)} ,
-         500
-      );
-      
-    }
-    
+    let identifier: ReturnType<typeof setTimeout>;
+
+    identifier = setTimeout(() => {
+      console.log("validating form");
+      setFormIsValid(email.includes("@") && password.length > 6);
+    }, 500);
+
     return () => {
-      console.log('clean up');
+      console.log("clean up");
       clearTimeout(identifier);
     };
-  }, [email, password,user]);
+  }, [email, password]);
 
   useEffect(() => {
+    if (formIsValid) {
+      console.log("form validated!");
+      setUserFormIsValid(true);
+    }
+  }, [formIsValid]);
+
+  useEffect(() => {
+
+   
     const userAuth = async(auth:Auth,userEmail:string,userPassword:string) => {
-      setLoading(true)
-      const { user } = await signInWithEmailAndPassword(auth, userEmail, userPassword) 
-      if (user) {
-        dispatch(login(user.uid))
-        alert('login successfully')
+      try {
+        setLoading(true)
+        const { user } = await signInWithEmailAndPassword(auth, userEmail, userPassword)
+        if (user) {
+          dispatch(login(user.uid))
+          setLoading(false)
+        }
+       }
+      catch (e) {
         setLoading(false)
-      } else {
-        alert('invalid username or password')
+        alert(e)
       }
       
     }
-    if (formIsValid) {
+    if (userFormIsValid) {
       const auth = getAuth();
       userAuth(auth,email,password)
-      // signInWithEmailAndPassword(auth, email, password)
-      //   .then((res) => dispatch(login(res.user.uid)))
-      //   .then(()=>setLoading(true))
-      //   .then((_) => alert("login succesfully"))
-      //   .then(()=>setLoading(false))
-      //   .catch(e=>alert(e.mesasge));
-      
+    
     }
-  }, [userIsLogin]);
-
-  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userSignedIn]);
 
   return (
     <>
       <Modal
-        // initialFocusRef={initialRef.current}
+        
         isOpen={isOpen}
         onClose={onClose}
       >
@@ -128,7 +132,7 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
                   <FormLabel>First Name</FormLabel>
                   <Input
                     type="text"
-                    // ref={initialRef.current}
+                    
                     placeholder="your first name..."
                   />
                 </FormControl>
@@ -136,7 +140,7 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
                   <FormLabel>Last Name</FormLabel>
                   <Input
                     type="text"
-                    // ref={initialRef.current}
+                    
                     placeholder="your last name..."
                   />
                 </FormControl>
@@ -144,7 +148,7 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
                   <FormLabel>Phone</FormLabel>
                   <Input
                     type="text"
-                    // ref={initialRef.current}
+                   
                     placeholder="0812345..."
                   />
                 </FormControl>
@@ -153,7 +157,7 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
                   <FormLabel>Subject</FormLabel>
                   <Input
                     type="text"
-                    // ref={initialRef.current}
+                    
                     placeholder="Math,Physics..."
                   />
                 </FormControl>
@@ -162,7 +166,7 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
                   <FormLabel>Lecturer Id</FormLabel>
                   <Input
                     type="text"
-                    // ref={initialRef.current}
+                    
                     placeholder="NPSN..."
                   />
                 </FormControl>
@@ -171,7 +175,7 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
                   <FormLabel>Email</FormLabel>
                   <Input
                     type="email"
-                    // ref={initialRef.current}
+                    
                     placeholder="mamat@email.org"
                   />
                 </FormControl>
@@ -191,11 +195,11 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
 
           <ModalFooter>
             <Button
-              isLoading={loading?true:false}
-              loadingText='Loading...'
-              colorScheme='blue'
+              isLoading={loading ? true : false}
+              loadingText="Loading..."
+              colorScheme="blue"
               mr={3}
-              onClick={() => setUser(true)}
+              onClick={() => setUserSignedIn(!userSignedIn)}
             >
               {currState ? "login" : "submit"}
             </Button>
@@ -208,4 +212,3 @@ const Modals: NextPage<ModalsInterface> = ({ isOpen, onClose }) => {
 };
 
 export default Modals;
-
