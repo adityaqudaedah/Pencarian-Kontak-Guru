@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Flex, Spacer, Box, Text, Button } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useAppDispatch } from "../../hooks/useAppDispatch"
-import { useAppSelector } from "../../hooks/useAppSelector";
+// import { useAppSelector } from "../../hooks/useAppSelector";
 import { loginClicked } from "../../redux/features/nav/navButtonSlice";
 
 interface NavProps {
@@ -11,8 +11,9 @@ interface NavProps {
 
 const Navbar: NextPage<NavProps> = ({ buttonClick }) => {
 
-  const currState = useAppSelector(state=>state.navButton.isLoginButtonClicked)
+ 
   const dispatch = useAppDispatch()
+  const [clear, setClear] = useState<string>("")
 
   
   return (
@@ -24,7 +25,7 @@ const Navbar: NextPage<NavProps> = ({ buttonClick }) => {
           fontSize={["md", "lg", "xl", "3xl"]}
           fontWeight="extrabold"
         >
-          SMA NEGERI 73
+          SMA NEGERI XYZ
         </Text>
       </Box>
       <Spacer />
@@ -32,6 +33,7 @@ const Navbar: NextPage<NavProps> = ({ buttonClick }) => {
       <Box mr={4}>
         <Button
           onClick={() => {
+            setClear("cleared")
             buttonClick();
             dispatch(loginClicked(false))
           }}
@@ -42,8 +44,9 @@ const Navbar: NextPage<NavProps> = ({ buttonClick }) => {
         </Button>
         <Button
           onClick={() => {
+            setClear("cleared")
             buttonClick();
-            dispatch(loginClicked(!currState))
+            dispatch(loginClicked(true))
           }}
           colorScheme="teal"
           variant="ghost"
