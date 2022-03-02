@@ -29,8 +29,13 @@ export const useAppCollection = () => {
   };
 
   useEffect(() => {
-    getDoc();
-    return () => {};
+    let identifier: ReturnType<typeof setTimeout>
+    
+    identifier = setTimeout(()=> getDoc(),100)
+   
+    return () => {
+      clearTimeout(identifier)
+    };
   }, []);
 
   return users;
