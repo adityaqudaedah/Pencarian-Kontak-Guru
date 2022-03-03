@@ -1,5 +1,5 @@
-import { Button, Heading, ListItem, Image, Tooltip } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Button, Heading, ListItem, Image, Tooltip, Spinner } from "@chakra-ui/react";
+import React from "react";
 import { useAppCollection } from "../../hooks/useAppCollection";
 import Card from "../card";
 
@@ -7,11 +7,14 @@ const Item = () => {
 
  
   const usersCollection = useAppCollection();
+  // console.log(usersCollection!==null?usersCollection[0].nama:'hello');
+  // console.log(usersCollection)
+
 
   
   return (
     <>
-      {usersCollection?.map((curr, i) => (
+      {usersCollection!==null?usersCollection?.map((curr, i) => (
         <ListItem key={i}listStyleType="none">
           <Card>
             <Image
@@ -21,7 +24,7 @@ const Item = () => {
               alt="Dan Abramov"
             />
             <Heading size="md" mt={2}>
-            {curr.nama}
+            {curr?.nama}
             </Heading>
             <p>
               Subject : <span>{curr?.sub}</span>
@@ -36,7 +39,7 @@ const Item = () => {
             </Tooltip>
           </Card>
         </ListItem>
-      ))}
+      )):<><Spinner /></>}
     </>
   );
 };
