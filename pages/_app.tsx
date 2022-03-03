@@ -4,7 +4,7 @@ import {
   ColorModeProvider,
   extendTheme,
 } from "@chakra-ui/react";
-import { Fonts } from "./Fonts";
+import { Fonts } from "../Fonts";
 import { Provider } from "react-redux";
 import store from "../redux/store/index";
 
